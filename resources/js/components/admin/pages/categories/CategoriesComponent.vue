@@ -25,31 +25,16 @@
 import axios from 'axios'
 export default {
     created (){
-        this.loadCategories()
-    },
-    data() {
-        return {
-            //categories: [],
-            categories: {
-                data: []
-
-            },
-        }
-    },
-    methods: {
-        loadCategories(){
-            axios.get('/api/categoria')
-                .then(response => {
-                    console.log(response)
-                    this.categories = response
-                })
-                .catch(errors => {
-                    console.log(errors)
-                })
-
-        }
+        this.$store.dispatch('loadCategories')
     },
 
+   computed: {
+       categories () {
+
+           return this.$store.state.categories.items
+
+       }
+   }
 }
 </script>
 

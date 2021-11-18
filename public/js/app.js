@@ -2080,7 +2080,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  computed: {
+    totalCategories: function totalCategories() {
+      return this.$store.state.categories.items.data.lenght;
+    }
+  }
+});
 
 /***/ }),
 
@@ -2123,26 +2129,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
-    this.loadCategories();
+    this.$store.dispatch('loadCategories');
   },
-  data: function data() {
-    return {
-      //categories: [],
-      categories: {
-        data: []
-      }
-    };
-  },
-  methods: {
-    loadCategories: function loadCategories() {
-      var _this = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/categoria').then(function (response) {
-        console.log(response);
-        _this.categories = response;
-      })["catch"](function (errors) {
-        console.log(errors);
-      });
+  computed: {
+    categories: function categories() {
+      return this.$store.state.categories.items;
     }
   }
 });
@@ -2244,9 +2235,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  state: {},
-  mutations: {},
-  actions: {},
+  state: {
+    items: {
+      data: []
+    }
+  },
+  mutations: {
+    LOAD_CATEGORIES: function LOAD_CATEGORIES(state, categories) {
+      state.items = categories;
+    }
+  },
+  actions: {
+    loadCategories: function loadCategories(context) {
+      axios.get('/api/categoria').then(function (response) {
+        console.log(response); //this.categories = response
+
+        context.commit('LOAD_CATEGORIES', response);
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
+    }
+  },
   getters: {}
 });
 
@@ -20607,7 +20616,7 @@ var render = function () {
           "li",
           [
             _c("router-link", { attrs: { to: { name: "admin.categories" } } }, [
-              _vm._v("Categoria"),
+              _vm._v("Categoria (" + _vm._s(_vm.totalCategories) + ")"),
             ]),
           ],
           1

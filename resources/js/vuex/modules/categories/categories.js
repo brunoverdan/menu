@@ -1,3 +1,5 @@
+import axios from "axios"
+
 export default {
     state: {
         items: {
@@ -24,6 +26,20 @@ export default {
                     console.log(errors)
                 })
                 .finally(() => context.commit('PRELOADER', false))
+        },
+
+        storeCategory(context, params) {
+
+            context.commit('PRELOADER', true)
+            axios.post('/api/categoria', params)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+                .finally(() => context.commit('PRELOADER', false))
+
         }
 
     },

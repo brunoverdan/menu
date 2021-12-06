@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h1>Listagem des Categorias</h1>
+        <router-link :to="{nome: 'admin.categories.create'}" class="btn btn-success">Cadastrar</router-link>
         <table class="table table-dark">
             <thead>
                 <tr>

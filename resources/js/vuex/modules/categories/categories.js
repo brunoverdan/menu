@@ -28,17 +28,33 @@ export default {
                 .finally(() => context.commit('PRELOADER', false))
         },
 
+        loadCategory (context, id){
+
+            return new Promise((resolve, reject) => {
+
+                axios.post(`/api/categoria/${id}`)
+                    .then(response => resolve(response.data))
+                    .catch(error => reject(error))
+                    .finally(() => context.commit('PRELOADER', false))
+
+            })
+
+        },
+
         storeCategory(context, params) {
 
             context.commit('PRELOADER', true)
-            axios.post('/api/categoria', params)
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-                .finally(() => context.commit('PRELOADER', false))
+
+            return new Promise((resolve, reject) => {
+
+                axios.post('/api/categoria', params)
+                    .then(response => resolve())
+                    .catch(error => reject(error))
+                    .finally(() => context.commit('PRELOADER', false))
+
+            })
+
+
 
         }
 

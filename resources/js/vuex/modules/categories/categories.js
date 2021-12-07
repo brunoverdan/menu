@@ -32,7 +32,9 @@ export default {
 
             return new Promise((resolve, reject) => {
 
-                axios.post(`/api/categoria/${id}`)
+                context.commit('PRELOADER', true)
+
+                axios.get(`/api/categoria/${id}`)
                     .then(response => resolve(response.data))
                     .catch(error => reject(error))
                     .finally(() => context.commit('PRELOADER', false))

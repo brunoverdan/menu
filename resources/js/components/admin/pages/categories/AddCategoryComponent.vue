@@ -5,7 +5,7 @@
         </h1>
         <form class="form" @submit.prevent="submitForm">
             <div class="form-group">
-                <input type="text" v-model="nome" class="form-control" placeholder="Nome da Categoria">
+                <input type="text" v-model="name" class="form-control" placeholder="Nome da Categoria">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Enviar</button>
@@ -19,12 +19,14 @@
 export default {
     data() {
         return {
-            nome: ''
+            name: ''
         }
     },
     methods: {
         submitForm(){
-            this.$store.dispatch('storeCategory', {nome: this.nome})
+            this.$store.dispatch('storeCategory', {name: this.name})
+                .then(() => this.$router.push({name: 'admin.categories'}))
+                .catch
         }
     },
 

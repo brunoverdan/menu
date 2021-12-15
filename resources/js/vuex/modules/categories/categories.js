@@ -56,7 +56,18 @@ export default {
 
             })
 
+        },
 
+        updateCategory (context, params){
+
+            return new Promise((resolve, reject) => {
+
+                axios.put(`/api/categoria/${params.id}`, params)
+                    .then(response => resolve())
+                    .catch(error => reject(error))
+                    .finally(() => context.commit('PRELOADER', false))
+
+            })
 
         }
 
